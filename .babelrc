@@ -12,10 +12,14 @@
         "root": ["./"],
         "alias": {
           "src": "./src",
-          "components": "./src/components/",
-          "containers": "./src/containers/",
-          "theme": "./src/theme/",
-          "routes": "./src/Routes"
+          "components": "./src/components",
+          "containers": "./src/containers",
+          "theme": "./src/theme",
+          "routes": "./src/Routes",
+          "utils": "./src/utils",
+          "models": "./src/data/models",
+          "services": "./src/data/services",
+          "types": "./src/utils/types"
         },
         "cwd": "babelrc"
       }

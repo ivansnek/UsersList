@@ -59,7 +59,7 @@ munge_underscores=true
 
 module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
 module.name_mapper='^theme' -> '<PROJECT_ROOT>/src/theme'
-module.name_mapper='^store' -> '<PROJECT_ROOT>/src/store/'
+module.name_mapper='^data' -> '<PROJECT_ROOT>/src/data/'
 module.name_mapper='^components' -> '<PROJECT_ROOT>/src/components/'
 module.name_mapper='^containers' -> '<PROJECT_ROOT>/src/containers/'
 module.name_mapper='^utils' -> '<PROJECT_ROOT>/src/utils/'

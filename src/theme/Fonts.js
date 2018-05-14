@@ -11,10 +11,10 @@ const sizes = {
 };
 
 const types = {
-  base:  Platform.OS === 'ios' ? 'AvenirNext-Regular' : 'Roboto',
-  bold:  Platform.OS === 'ios' ?'AvenirNext-Bold' : 'Roboto',
-  light:  Platform.OS === 'ios' ?'AvenirNext-Light' : 'Roboto'
-}
+  base: Platform.OS === 'ios' ? 'AvenirNext-Regular' : 'Roboto',
+  bold: Platform.OS === 'ios' ? 'AvenirNext-Bold' : 'Roboto',
+  light: Platform.OS === 'ios' ? 'AvenirNext-Light' : 'Roboto'
+};
 
 const Fonts = {
   sizes,

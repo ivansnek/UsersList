@@ -27,8 +27,8 @@ const metrics = {
     modal: 100
   },
   images: {
-    small: 20,
-    medium: 40,
+    small: 15,
+    medium: 25,
     large: 60,
     logo: 120
   },

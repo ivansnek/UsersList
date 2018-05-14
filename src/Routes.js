@@ -12,6 +12,7 @@ YellowBox.ignoreWarnings([
 
 import LoginView from 'containers/auth/LoginView';
 import UsersListView from 'containers/users/UsersListView';
+import UserFormView from 'containers/users/UserFormView';
 import { Colors, Fonts } from './theme';
 
 export default createStackNavigator(
@@ -24,9 +25,12 @@ export default createStackNavigator(
     },
     UsersList: {
       screen: UsersListView
+    },
+    UserForm: {
+      screen: UserFormView
     }
   },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'UsersList'
   }
 );
