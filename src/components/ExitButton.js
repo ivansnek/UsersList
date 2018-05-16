@@ -17,10 +17,11 @@ type Props = {
 };
 
 const onExitHandler = async (navigation: any): any => {
-  navigation.replace('Login');
   try {
-    const deleted = await AsyncStorage.removeItem('AUTH.USER');
+    navigation.replace('Login');
+    await AsyncStorage.clear();
   } catch (err) {
+    navigation.replace('Login');
     console.log('ERROR', err);
   }
 };

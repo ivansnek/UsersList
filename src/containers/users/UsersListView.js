@@ -11,29 +11,37 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Colors, Images } from 'theme';
 import {
   UserRowItem,
   ListSeparator,
   FloatButton,
-  ExitButton
+  ExitButton,
+  EmptyContent
 } from 'components';
-import type { UserType } from 'types';
-import { generateRandomAvatar } from 'utils';
+import type { UserType, Action } from 'types';
+import { getAvatar } from 'utils';
 import { Metrics } from 'theme';
-import UserService from 'services/UserService';
+import { loadUsers, updateUser } from 'actions/UsersActions';
+import UserService from 'db-services/UserService';
 
 const mockUsers = require('../../data/mock-users.json');
 
 type Props = {
-  navigation: any
+  navigation: any,
+  loadUsers: Action,
+  updateUser: Action,
+  users: Array<UserType>
 };
+
 type State = {
   users: Array<UserType>
 };
 
-export default class UsersList extends React.PureComponent<Props, State> {
+class UsersListView extends React.PureComponent<Props, State> {
+  didFocus: () => void;
   static navigationOptions = ({ navigation }) => ({
     title: 'Users List',
     headerStyle: {
@@ -44,59 +52,85 @@ export default class UsersList extends React.PureComponent<Props, State> {
   });
   constructor(props: Props) {
     super(props);
+    // For mock data use 'mockUsers' on state
     this.state = {
-      users: mockUsers
+      users: []
     };
+    this.didFocus = this.props.navigation.addListener('willFocus', payload => {
+      this.props.loadUsers();
+    });
   }
 
   componentDidMount() {
-    UserService.findAll()
-      .then(res => console.log('RES', res))
-      .catch(err => console.log('ERR', err));
+    this.props.loadUsers();
+  }
+
+  componentWillUnmount() {
+    this.didFocus.remove();
   }
 
   _keyExtractor = (item: any, index: number) => `${item.id}-${index}`;
 
-  _loadUsers = () => {
-    console.log('Load Users from BD');
+  _toggleUserActive = (user: UserType, active: boolean): void => {
+    this.props.updateUser({ ...user, active: active });
   };
 
-  _toggleUserActive = (user: any) => {
-    console.log('Toggle with redux');
-  };
-
-  _renderItem = ({ item, index }): React.ComponentType => (
+  _renderItem = ({ item, index }): React.Node => (
     <UserRowItem
-      onActivePress={() => this._toggleUserActive(item)}
+      active={item.active}
+      onActivePress={active => this._toggleUserActive(item, active)}
       onPress={() =>
-        this.props.navigation.navigate('UserForm', { title: item.name })
+        this.props.navigation.navigate('UserForm', {
+          title: item.name,
+          id: item.id
+        })
       }
-      photoURL={generateRandomAvatar(item.gender)}
+      photoURL={getAvatar(item.id, item.gender)}
       user={item}
     />
   );
 
-  _addNewUser = () => {
+  _navigateNewUser = () => {
     this.props.navigation.navigate('UserForm', { isNew: true });
   };
 
   render() {
+    if (this.props.users.length === 0) {
+      return (
+        <EmptyContent>
+          <FloatButton
+            color={Colors.accentColor}
+            onPress={this._navigateNewUser}
+          >
+            <Image source={Images.addUser} style={styles.addButtonIcon} />
+          </FloatButton>
+        </EmptyContent>
+      );
+    }
     return (
       <View style={styles.container}>
         <FlatList
           ItemSeparatorComponent={() => <ListSeparator color="light" />}
-          data={this.state.users}
+          data={this.props.users}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           style={styles.listStyle}
         />
-        <FloatButton color={Colors.accentColor} onPress={this._addNewUser}>
+        <FloatButton color={Colors.accentColor} onPress={this._navigateNewUser}>
           <Image source={Images.addUser} style={styles.addButtonIcon} />
         </FloatButton>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  users: state.user.users
+});
+
+export default connect(mapStateToProps, { loadUsers, updateUser })(
+  UsersListView
+);
 
 const styles = StyleSheet.create({
   container: { flex: 1, width: '100%', height: '100%' },

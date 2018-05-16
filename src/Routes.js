@@ -1,8 +1,4 @@
-'use strict';
-
-// @flow
-
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings([
@@ -10,27 +6,49 @@ YellowBox.ignoreWarnings([
   'Module RCTImageLoader'
 ]);
 
+import LoginLoadingView from 'containers/auth/LoginLoadingView';
 import LoginView from 'containers/auth/LoginView';
 import UsersListView from 'containers/users/UsersListView';
 import UserFormView from 'containers/users/UserFormView';
 import { Colors, Fonts } from './theme';
 
-export default createStackNavigator(
-  {
-    Login: {
-      screen: LoginView,
-      navigationOptions: {
-        header: null
-      }
-    },
-    UsersList: {
-      screen: UsersListView
-    },
-    UserForm: {
-      screen: UserFormView
+const AppNavigation = createStackNavigator({
+  UsersList: {
+    screen: UsersListView
+  },
+  UserForm: {
+    screen: UserFormView
+  },
+  Login: {
+    screen: LoginView,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
+
+const LoginNavigation = createStackNavigator({
+  Login: {
+    screen: LoginView,
+    navigationOptions: {
+      header: null
     }
   },
+  UsersList: {
+    screen: UsersListView
+  },
+  UserForm: {
+    screen: UserFormView
+  }
+});
+
+export default createSwitchNavigator(
   {
-    initialRouteName: 'UsersList'
+    AppLoading: LoginLoadingView,
+    App: AppNavigation,
+    Auth: LoginNavigation
+  },
+  {
+    initialRouteName: 'AppLoading'
   }
 );

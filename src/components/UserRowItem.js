@@ -12,13 +12,18 @@ import type { UserType } from 'types';
 type Props = {
   user: UserType,
   photoURL: string,
-  onActivePress: () => void,
-  onPress: () => void
+  onActivePress: (active: boolean) => void,
+  onPress: () => void,
+  active: boolean
 };
 
-type State = {};
-
-export default function({ user, photoURL, onActivePress, onPress }: Props) {
+export default function({
+  active,
+  user,
+  photoURL,
+  onActivePress,
+  onPress
+}: Props) {
   const {
     container,
     infoContainer,
@@ -32,11 +37,16 @@ export default function({ user, photoURL, onActivePress, onPress }: Props) {
       <View style={container}>
         <Image source={{ uri: photoURL }} style={avatar} />
         <View style={infoContainer}>
-          <Text style={userTitle}>{user.name}{' '}{user.lastname}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={userTitle}>
+            {user.name} {user.lastName}
+          </Text>
           <Text style={userName}>{user.username}</Text>
         </View>
         <View style={actionBox}>
-          <MKCheckbox checked onPress={onActivePress} />
+          <MKCheckbox
+            checked={active}
+            onCheckedChange={(event: any) => onActivePress(event.checked)}
+          />
         </View>
       </View>
     </TouchableOpacity>
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 0,
     width: Metrics.icons.large,
     height: Metrics.icons.large,
-    borderRadius: 30,
+    borderRadius: 22,
     borderWidth: 4,
     borderColor: Colors.lightOverlay
   },

@@ -20,7 +20,7 @@ export default function({ icon, color, onPress, children }: Props) {
       backgroundColor={color}
       onPress={onPress}
       shadowColor={Colors.black}
-      shadowOffset={{width: 12, height: 12}}
+      shadowOffset={{ width: 12, height: 12 }}
       shadowOpacity={0.7}
       shadowRadius={2}
       style={styles.buttonStyle}

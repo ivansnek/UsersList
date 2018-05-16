@@ -4,6 +4,7 @@
 
 import React from 'react';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -16,15 +17,24 @@ import {
   Platform,
   Animated,
   Easing,
-  Keyboard
+  Keyboard,
+  ActivityIndicator
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { MKButton, MKTextField } from 'react-native-material-kit';
 
 import { Images, Colors, Fonts, Metrics } from 'theme';
+import { login, userChanged, passwordChanged } from 'actions/AuthActions';
+import type { Action, Credentials } from 'types';
 
 type Props = {
-  navigation: any
+  navigation: any,
+  user: string,
+  password: string,
+  error: string,
+  passwordChanged: (payload: string) => Action,
+  userChanged: (payload: string) => Action,
+  login: (user: Credentials, cb: () => void) => Action
 };
 
 type AnimatedValue = Animated.Value;
@@ -32,18 +42,15 @@ type AnimatedValue = Animated.Value;
 type AnimatedValueXY = Animated.ValueXY;
 
 type State = {
-  text: string,
-  password: string
+  loading: boolean
 };
-
-export default class LoginView extends React.PureComponent<Props, State> {
+class LoginView extends React.PureComponent<Props, State> {
   logoTraslationValue: AnimatedValueXY;
   logoScaleValue: AnimatedValue;
   constructor(props: Props) {
     super(props);
     this.state = {
-      text: '',
-      password: ''
+      loading: false
     };
   }
 
@@ -67,17 +74,21 @@ export default class LoginView extends React.PureComponent<Props, State> {
     ]);
   };
 
-  validForm(): boolean {
-    const { text, password } = this.state;
-    return _.isEmpty(text) && _.isEmpty(password);
+  _validForm(): boolean {
+    const { user, password } = this.props;
+    return !_.isEmpty(user) && !_.isEmpty(password);
   }
 
   handleOnLogin = (): void => {
-    console.log('NAVIGATE TO USER');
-    this.validForm() && this.props.navigation.replace('UsersList');
+    const { user, password, login } = this.props;
+    const navigateToList = () => this.props.navigation.replace('UsersList');
+    if (this._validForm()) {
+      this.setState({ loading: true });
+      login({ user, password }, navigateToList);
+    }
   };
 
-  handleKeyboardDidHide = (): void => {
+  _handleKeyboardDidHide = (): void => {
     Animated.parallel([
       Animated.timing(this.logoTraslationValue, {
         toValue: { x: 0, y: 0 },
@@ -92,6 +103,15 @@ export default class LoginView extends React.PureComponent<Props, State> {
     ]);
   };
 
+  _renderLoading = () => (
+    <ActivityIndicator color={Colors.white} size="large" />
+  );
+
+  _renderError = () => {
+    setTimeout(() => this.setState({ loading: false }), 1);
+    return <Text style={styles.errorLabel}>{this.props.error}</Text>;
+  };
+
   render() {
     const {
       container,
@@ -104,7 +124,8 @@ export default class LoginView extends React.PureComponent<Props, State> {
       buttonStyle,
       buttonTextStyle,
       imgBackground,
-      buttonShadowOffset
+      buttonShadowOffset,
+      errorLabel
     } = styles;
     const animateLogoTransform = {
       transform: [
@@ -128,31 +149,34 @@ export default class LoginView extends React.PureComponent<Props, State> {
           <View style={inputContainer}>
             <MKTextField
               autoCapitalize="none"
-              onBlur={this.handleKeyboardDidHide}
+              onBlur={this._handleKeyboardDidHide}
               onFocus={this.handleKeyboardDidShow}
-              onTextChange={text => this.setState({ text })}
+              onTextChange={user => this.props.userChanged(user)}
               placeholder="Enter your username"
               placeholderTextColor={Colors.white}
               returnKeyType="next"
               style={inputStyle}
               textInputStyle={textStyle}
               tintColor={Colors.white}
-              value={this.state.text}
+              value={this.props.user}
             />
             <MKTextField
               autoCapitalize="none"
-              onBlur={this.handleKeyboardDidHide}
+              onBlur={this._handleKeyboardDidHide}
               onFocus={this.handleKeyboardDidShow}
-              onTextChange={password => this.setState({ password })}
+              onTextChange={password => this.props.passwordChanged(password)}
+              password
               placeholder="Enter your password"
               placeholderTextColor={Colors.white}
               returnKeyType="send"
               style={inputStyle}
               textInputStyle={textStyle}
               tintColor={Colors.white}
-              value={this.state.password}
+              value={this.props.password}
             />
           </View>
+          {this.state.loading && this._renderLoading()}
+          {this.props.error && this._renderError()}
           <View style={inputContainer}>
             <MKButton
               backgroundColor={Colors.accentColor}
@@ -173,6 +197,18 @@ export default class LoginView extends React.PureComponent<Props, State> {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user,
+  password: auth.password,
+  error: auth.error
+});
+
+export default connect(mapStateToProps, {
+  login,
+  passwordChanged,
+  userChanged
+})(LoginView);
 
 const styles = StyleSheet.create({
   imgBackground: {
@@ -238,5 +274,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  errorLabel: {
+    ...Fonts.h4b,
+    color: Colors.errorColor,
+    backgroundColor: Colors.lightOverlay
   }
 });

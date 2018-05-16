@@ -62,7 +62,6 @@
       "react/no-unused-state": 2,
       "react/no-will-update-set-state": 2,
       "react/prefer-es6-class": 2,
-      "react/require-optimization": 1,
       "react/self-closing-comp": 2,
       "react/sort-prop-types": 2,
       "react/jsx-boolean-value": 2,
@@ -93,7 +92,10 @@
     "react-native": "0.55.4",
     "react-native-material-kit": "^0.5.1",
     "react-navigation": "^2.0.1",
-    "realm": "^2.4.0"
+    "react-redux": "^5.0.7",
+    "realm": "^2.4.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

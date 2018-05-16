@@ -2,9 +2,17 @@
 
 // @flow
 
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 
-const reducers = combineReducers({});
+// Reducers
+import AuthReducer from './reducers/AuthReducer';
+import UsersReducer from './reducers/UsersReducer';
+
+const reducers = combineReducers({
+  auth: AuthReducer,
+  user: UsersReducer
+});
 
 const AppStore = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 

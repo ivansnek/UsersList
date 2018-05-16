@@ -16,9 +16,11 @@
           "containers": "./src/containers",
           "theme": "./src/theme",
           "routes": "./src/Routes",
+          "data": "./src/data/",
           "utils": "./src/utils",
           "models": "./src/data/models",
-          "services": "./src/data/services",
+          "db-services": "./src/data/db-services",
+          "actions": "./src/data/actions",
           "types": "./src/utils/types"
         },
         "cwd": "babelrc"

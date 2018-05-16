@@ -1,15 +1,13 @@
 'use strict';
 
 // @flow
+
 import Realm from 'realm';
 
 class User extends Realm.Object {
+  static _className = 'User';
   constructor() {
     super();
-  }
-
-  isActive(): boolean {
-    return this.active;
   }
 
   getFullName(): string {
@@ -19,14 +17,16 @@ class User extends Realm.Object {
 
 User.schema = {
   name: 'User',
+  primaryKey: 'id',
   properties: {
+    id: 'string',
     name: 'string',
     lastName: 'string',
-    age: 'int',
-    gender: 'string',
-    active: 'bool',
-    user: 'string',
-    password: 'string'
+    age: 'int?',
+    gender: 'string?',
+    active: 'bool?',
+    username: 'string?',
+    password: 'string?'
   }
 };
 
