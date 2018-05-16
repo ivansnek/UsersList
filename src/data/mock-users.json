@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Ivan",
+    "lastname": "Eusebio Perez",
+    "gender": "Men",
+    "age": 29,
+    "active": true,
+    "username": "ivan"
+  },
+  {
+    "id": 212223,
+    "name": "John",
+    "lastname": "Doe",
+    "gender": "Men",
+    "age": 19,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 22,
+    "name": "Mary",
+    "lastname": "Key",
+    "gender": "Women",
+    "age": 25,
+    "active": true,
+    "username": "maryK"
+  },
+  {
+    "id": 233,
+    "name": "Fernanda",
+    "lastname": "Parra",
+    "gender": "Women",
+    "age": 22,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 221,
+    "name": "Fabiola",
+    "lastname": "Perez",
+    "gender": "Women",
+    "age": 29,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 1322,
+    "name": "Ernesto",
+    "lastname": "Martinez Sedano",
+    "gender": "Men",
+    "age": 32,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 244,
+    "name": "Kai",
+    "lastname": "Green",
+    "gender": "Men",
+    "age": 34,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 5212,
+    "name": "Cedric",
+    "lastname": "McMillan",
+    "gender": "Men",
+    "age": 29,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 2123,
+    "name": "Sthephen",
+    "lastname": "Johnson",
+    "gender": "Men",
+    "age": 29,
+    "active": true,
+    "username": "coco"
+  },
+  {
+    "id": 34,
+    "name": "Jose Fernando",
+    "lastname": "Gonzalez Lomeli",
+    "gender": "Men",
+    "age": 49,
+    "active": true,
+    "username": "chava"
+  }
+]

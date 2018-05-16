@@ -1,3 +1,30 @@
 {
-  "presets": ["react-native"]
+  "presets": ["react-native", "flow"],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  },
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "src": "./src",
+          "components": "./src/components",
+          "containers": "./src/containers",
+          "theme": "./src/theme",
+          "routes": "./src/Routes",
+          "data": "./src/data/",
+          "utils": "./src/utils",
+          "models": "./src/data/models",
+          "db-services": "./src/data/db-services",
+          "actions": "./src/data/actions",
+          "types": "./src/utils/types"
+        },
+        "cwd": "babelrc"
+      }
+    ]
+  ]
 }

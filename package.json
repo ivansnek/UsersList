@@ -4,16 +4,112 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./*.js ./src/*.js ./src/**/*.js",
+    "pretty": "prettier ./*.js ./src/*.js ./src/**/*.js --write",
+    "assert-pretty": "prettier -l ./*.js ./src/*.js ./src/*/**.js",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios"
+  },
+  "flow-coverage-report": {
+    "includeGlob": [
+      "src/*.js",
+      "src/components/*.js",
+      "src/containers/**/*.js",
+      "src/theme/*.js",
+      "src/data/*.js",
+      "src/data/**/*.js",
+      "src/utils/*.js"
+    ],
+    "type": [
+      "text",
+      "html",
+      "json"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "es6": true,
+      "react-native/react-native": true
+    },
+    "plugins": [
+      "prettier",
+      "eslint-plugin-flowtype",
+      "react",
+      "react-native"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "react-native/split-platform-components": 2,
+      "react-native/no-inline-styles": 2,
+      "react-native/no-color-literals": 2,
+      "react/boolean-prop-naming": 2,
+      "react/no-did-mount-set-state": 2,
+      "react/no-multi-comp": 2,
+      "react/no-redundant-should-component-update": 2,
+      "react/no-typos": 2,
+      "react/no-string-refs": 2,
+      "react/no-unescaped-entities": 2,
+      "react/no-unused-prop-types": 2,
+      "react/no-unused-state": 2,
+      "react/no-will-update-set-state": 2,
+      "react/prefer-es6-class": 2,
+      "react/self-closing-comp": 2,
+      "react/sort-prop-types": 2,
+      "react/jsx-boolean-value": 2,
+      "react/jsx-closing-bracket-location": [
+        2,
+        "tag-aligned"
+      ],
+      "react/jsx-curly-spacing": 2,
+      "react/jsx-equals-spacing": 2,
+      "react/jsx-indent": [
+        2,
+        2
+      ],
+      "react/jsx-no-duplicate-props": 2,
+      "react/jsx-pascal-case": 2,
+      "react/jsx-sort-props": 2
+    },
+    "extends": []
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "dependencies": {
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-remove-console": "^6.9.2",
+    "lodash": "^4.17.10",
     "react": "16.3.1",
-    "react-native": "0.55.4"
+    "react-native": "0.55.4",
+    "react-native-material-kit": "^0.5.1",
+    "react-navigation": "^2.0.1",
+    "react-redux": "^5.0.7",
+    "realm": "^2.4.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "babel-jest": "22.4.3",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.8.2",
+    "eslint-plugin-react-native": "^3.2.1",
+    "flow-bin": "^0.72.0",
     "jest": "22.4.3",
+    "prettier": "^1.12.1",
     "react-test-renderer": "16.3.1"
   },
   "jest": {
